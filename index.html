@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Table Manager</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <h1>📊 Table Manager</h1>
+
+    <div id="table-list">
+      <h2>Your Tables</h2>
+      <ul id="tables" class="table-list"></ul>
+      <div class="controls">
+        <button class="action-btn" onclick="createNewTable()">+ Add New Table</button>
+        <button class="action-btn" onclick="exportToJson()">⬇ Export JSON</button>
+        <input type="file" accept=".json" onchange="importFromJson(event)" />
+      </div>
+    </div>
+
+    <div id="table-editor" style="display:none;">
+      <h2 contenteditable="true" id="table-title">Table Title</h2>
+
+      <div class="controls">
+        <label>Mark numeric column:</label>
+        <select id="numeric-column-selector" onchange="updateNumericColumn()"></select>
+      </div>
+
+      <div class="table-controls">
+        <button class="action-btn" onclick="addColumn()">➕ Add Column</button>
+        <button class="action-btn" onclick="addRow()">➕ Add Row</button>
+      </div>
+
+      <div class="table-wrapper">
+        <table id="editable-table">
+          <thead></thead>
+          <tbody></tbody>
+          <tfoot></tfoot>
+        </table>
+      </div>
+
+      <div class="controls">
+        <button class="action-btn" onclick="saveTable()">💾 Save Table</button>
+        <button class="danger-btn" onclick="deleteCurrentTable()">🗑 Delete Table</button>
+        <button class="action-btn" onclick="closeEditor()">❌ Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 2rem;
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+#app {
+  max-width: 1000px;
+  margin: auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+  margin-top: 0;
+}
+
+.table-list {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 1rem;
+}
+
+.table-list li {
+  margin-bottom: 0.5rem;
+}
+
+.table-list li button {
+  background-color: #e2e8f0;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+}
+
+.table-list li button:hover {
+  background-color: #cbd5e1;
+}
+
+.controls {
+  margin: 1rem 0;
+}
+
+.action-btn, .danger-btn {
+  margin-right: 0.5rem;
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.action-btn {
+  background-color: #3182ce;
+  color: white;
+}
+
+.action-btn:hover {
+  background-color: #2b6cb0;
+}
+
+.danger-btn {
+  background-color: #e53e3e;
+  color: white;
+}
+
+.danger-btn:hover {
+  background-color: #c53030;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+table th[contenteditable], table td[contenteditable] {
+  background-color: #fffbe6;
+}
+
+tfoot td {
+  font-weight: bold;
+  background-color: #e6ffed;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
