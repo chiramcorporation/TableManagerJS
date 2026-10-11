@@ -1,35 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <title>Table Manager</title>
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <div id="app">
-    <h1>📊 Table Manager</h1>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Table Manager — Chiram Design System</title>
+  <meta name="description"
+    content="Dynamic Table Manager with glassmorphism theme, instant local storage, numeric column formulas, and JSON export/import." />
 
-    <div id="table-list">
-      <h2>Your Tables</h2>
-      <ul id="tables" class="table-list"></ul>
-      <div class="controls">
-        <button class="action-btn" onclick="createNewTable()">+ Add New Table</button>
-        <button class="action-btn" onclick="exportToJson()">⬇ Export JSON</button>
-        <input type="file" accept=".json" onchange="importFromJson(event)" />
+  <!-- 1. Google Fonts Preconnect & Stylesheet per THEME.md -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap"
+    rel="stylesheet" />
+
+  <!-- Cache Buster & Dynamic Versioned Loader -->
+  <script src="loader.js"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="styles.css" />
+  </noscript>
+</head>
+
+<body>
+  <!-- 9. Sticky Glass Header -->
+  <header class="site-header">
+    <div class="header-brand">
+      <span class="brand-icon">📊</span>
+      <span class="brand-title">TableManager</span>
+    </div>
+    <div class="header-meta">
+      <span class="version-pill" id="app-version-badge">v1.0.0</span>
+    </div>
+  </header>
+
+  <div id="app">
+    <!-- 11. Hero Section -->
+    <section class="hero reveal">
+      <div class="hero-badge">Dynamic Data Workspace</div>
+      <!-- <h1>📊 Table Manager</h1> -->
+      <p>Create, manage, and calculate structured data tables with local persistence, numeric formulas, and seamless
+        JSON portability.</p>
+      <!-- <div class="hero-actions">
+        <button class="btn btn-primary" onclick="createNewTable()">+ Add New Table</button>
+        <button class="btn btn-outline" onclick="exportToJson()">⬇ Export JSON</button>
+        <label class="btn btn-outline file-upload-btn">
+          📁 Import JSON
+          <input type="file" accept=".json" onchange="importFromJson(event)" />
+        </label>
+      </div> -->
+    </section>
+
+    <!-- 12. Stats Strip -->
+    <div class="stats-strip reveal">
+      <div class="stat-item">
+        <span class="stat-num" id="stat-table-count">0</span>
+        <span class="stat-label">Saved Tables</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num" id="stat-row-count">0</span>
+        <span class="stat-label">Total Rows</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num" id="stat-col-count">0</span>
+        <span class="stat-label">Active Columns</span>
       </div>
     </div>
 
-    <div id="table-editor" style="display:none;">
-      <h2 contenteditable="true" id="table-title">Table Title</h2>
-
-      <div class="controls">
-        <label>Mark numeric column:</label>
-        <select id="numeric-column-selector" onchange="updateNumericColumn()"></select>
+    <!-- Table List Section (Glass Card) -->
+    <div id="table-list" class="glass-card reveal">
+      <!-- 8. Section Label Pattern -->
+      <div class="section-header">
+        <span class="section-label">WORKSPACE</span>
+        <h2>Your Tables</h2>
+        <p>Select any table below to edit its schema, edit cell values, or calculate sums.</p>
       </div>
 
-      <div class="table-controls">
-        <button class="action-btn" onclick="addColumn()">➕ Add Column</button>
-        <button class="action-btn" onclick="addRow()">➕ Add Row</button>
+      <ul id="tables" class="table-list"></ul>
+
+      <div class="controls">
+        <button class="btn btn-primary action-btn" onclick="createNewTable()">+ Add New Table</button>
+        <button class="btn btn-outline action-btn" onclick="exportToJson()">⬇ Export JSON</button>
+        <label class="btn btn-outline file-upload-btn">
+          📁 Import JSON
+          <input type="file" accept=".json" onchange="importFromJson(event)" />
+        </label>
+      </div>
+    </div>
+
+    <!-- Table Editor Section (Glass Card) -->
+    <div id="table-editor" class="glass-card reveal" style="display:none;">
+      <!-- 8. Section Label Pattern -->
+      <div class="section-header">
+        <span class="section-label">ACTIVE EDITOR</span>
+        <div class="editable-title-wrapper">
+          <h2 contenteditable="true" id="table-title" title="Click to rename table">Table Title</h2>
+        </div>
+        <p>Click on headers or cells to edit inline. Changes are saved to local storage.</p>
+      </div>
+
+      <div class="editor-settings-bar">
+        <div class="selector-group">
+          <label for="numeric-column-selector">Mark numeric column (auto-summed):</label>
+          <select id="numeric-column-selector" class="styled-select" onchange="updateNumericColumn()"></select>
+        </div>
+
+        <div class="table-controls">
+          <button class="btn btn-outline action-btn" onclick="addColumn()">➕ Add Column</button>
+          <button class="btn btn-outline action-btn" onclick="addRow()">➕ Add Row</button>
+        </div>
       </div>
 
       <div class="table-wrapper">
@@ -40,14 +120,28 @@
         </table>
       </div>
 
-      <div class="controls">
-        <button class="action-btn" onclick="saveTable()">💾 Save Table</button>
-        <button class="danger-btn" onclick="deleteCurrentTable()">🗑 Delete Table</button>
-        <button class="action-btn" onclick="closeEditor()">❌ Close</button>
+      <div class="editor-actions">
+        <div class="editor-actions-left">
+          <button class="btn btn-primary action-btn" onclick="saveTable()">💾 Save Table</button>
+          <button class="btn btn-outline action-btn" onclick="closeEditor()">❌ Close Editor</button>
+        </div>
+        <button class="btn btn-danger danger-btn" onclick="deleteCurrentTable()">🗑 Delete Table</button>
       </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <p class="footer-text">
+        &copy; 2024 - 2027 Chiram. All Rights Reserved.
+      </p>
+      <p class="footer-text">
+        Chiram Design System &bull; Dark Premium Glassmorphism Theme (<span class="app-version">v1.0.0</span>)
+      </p>
+    </footer>
   </div>
 
-  <script src="script.js"></script>
+  <!-- Toast notification container for micro-interactions -->
+  <div class="toast-container" aria-live="polite"></div>
 </body>
+
 </html>
